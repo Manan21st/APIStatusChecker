@@ -2,6 +2,9 @@
 
 A FastAPI-based service that monitors API status pages using conditional HTTP polling. Automatically detects and logs incidents, outages, and degradations from status feeds.
 
+Deployed on - [apistatuschecker-production.up.railway.app](https://apistatuschecker-production.up.railway.app/)
+
+
 ## Features
 
 - **Conditional HTTP Polling**: Efficient event-driven polling using ETag headers
