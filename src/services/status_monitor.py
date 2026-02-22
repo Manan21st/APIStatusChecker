@@ -49,18 +49,23 @@ class StatusMonitorService:
                     "summary": self._strip_html(entry.summary),
                     "updated": entry.updated,
                 }
-                self._add_incident(incident)
+                is_new = self._add_incident(incident)
+
+                if not is_new:
+                    return
 
                 print(f"[{entry.updated}] Product: {entry.title}")
                 print(f"{incident['summary']}")
 
-    def _add_incident(self, incident: Dict) -> None:
+    def _add_incident(self, incident: Dict) -> bool:
         incident_id = incident.get("id")
         if incident_id:
             existing_ids = [inc.get("id") for inc in self.recent_incidents]
             if incident_id in existing_ids:
-                return 
-        
+                return False
+
         self.recent_incidents.append(incident)
         if len(self.recent_incidents) > self.max_incidents:
-            self.recent_incidents = self.recent_incidents[-self.max_incidents :]
+            self.recent_incidents = self.recent_incidents[-self.max_incidents:]
+
+        return True
